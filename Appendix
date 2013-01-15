@@ -1,0 +1,12 @@
+# Appendix
+
+## The problem with gems
+
+There are a handful of problems with doing internal code-reuse through a gem-based system that Capable tries to solve (in no particular order). Here's a little list of them. If you're looking into code-reuse and these aren't problems for you, you may not need it and could do so via bundling your share code as one or more private gems. If you have other problems that capable solves, please let me know and I'll add it to the list.  
+
+Authentication is troublesome. Internal code tends to be private. Obviously you don't want to have to release your code publicly to rubygems just because you want to reuse it. If you use the git subsystem, you have to deal with having a deploy user and manage that private key and/or user's user/pass.
+
+With a gem, if you want to share some things and not others, you have to share the entire gem. You can make it so you have to specifically require a file in the gem, but those other files are still there. This isn't much of a problem, it just annoys me.
+
+The dependency management of gems is has been fleshed out by bundler. However, for obvious reasons, there's no dependency management between items in the same gem unless the gem implements that itself. So if you have internal dependencies in the code share, you're either implementing it yourself or breaking it into a lot of small gems.
+
