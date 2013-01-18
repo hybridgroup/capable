@@ -8,8 +8,4 @@ require 'yaml'
   require File.join File.dirname(__FILE__), "/capable/#{f}"
 end
 
-
-# Namespace for all code in this gem
-module Capable
-  
-end
+module Capable; end

@@ -45,12 +45,30 @@ describe Capable::CLI do
   end
 
   describe "#verify" do
-    it 'should be able to verify packages' do
+    it 'should be able to verify packages are correct' do
       jump_to('load_files') do
-        
+        cli = Capable::CLI.new %w(verify)
+        out, err = capture_io do
+          cli.start.must_equal 0
+        end
+        out.must_match(/0 Errors/)
+        err.must_be_empty
+      end
+
+    end
+
+    it 'should be able to verify packages are changed' do
+      jump_to('load_files_error') do
+        cli = Capable::CLI.new %w(verify)
+        out, err = capture_io do
+          cli.start.must_equal 3
+        end
+        out.must_match(/3 Errors/)
+        err.must_match(/changed/)
       end
     end
   end
+
 
   describe "#check_list" do
     it 'should be able to check the list' do
@@ -60,6 +78,19 @@ describe Capable::CLI do
           cli.start.must_equal 0
         end
         out.must_match(/No errors/)
+      end
+    end
+  end
+
+  describe "#cleanup" do
+    it 'should be able to remove created files' do
+      jump_to('target_files') do
+        `cp -r ../load_files/* ./`
+        cli = Capable::CLI.new %w(cleanup)
+        out, err = capture_io do
+          cli.start.must_equal 0
+        end
+        Dir.glob('*').wont_include("hello_you.rb")
       end
     end
   end

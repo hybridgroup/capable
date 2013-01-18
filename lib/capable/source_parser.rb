@@ -184,7 +184,8 @@ module Capable
     def manifest
       {:provider => @provider,
         Source::KeyName => Source::KeyClass.new(get_file!).to_s,
-        :target => target}
+        :target => target,
+        :size => get_file!.length}
     end
 
   end

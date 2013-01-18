@@ -7,7 +7,7 @@ module Capable
   class CLI
     
     class CommandExists < Exception; end
-    @commands = [:package, :check_status, :check_list, :help].freeze
+    @commands = [:package, :verify, :cleanup, :check_list, :help].freeze
 
     # Verifies if a command is a valid CLI command
     #
@@ -38,6 +38,7 @@ module Capable
       help_output :help, 'Output this help page'
       help_output :package, 'Load the Capable file and update files'
       help_output :verify, 'Verify that no files have changed since the last package'
+      help_output :cleanup, 'Remove all files created from the last packaging and delete Capable.load'
       help_output :check_list, 'Check that our Capable.list is valid'
       0
     end
@@ -67,13 +68,13 @@ module Capable
     end
 
     # Verify that no files have changed since the last package
-    def check_status
+    def verify
       file = @argv[1] || 'Capable.load'
       if File.exists?(file)
         contents = File.read(file)
         LoadParser.new(contents).check!
       else
-        warn "File '#{file}' does not exist! Unable to load list..."
+        warn "File '#{file}' does not exist! Unable to load manifest..."
         1
       end
     end
@@ -88,6 +89,18 @@ module Capable
         0
       else
         warn "File '#{file}' does not exist! Unable to load list..."
+        1
+      end
+    end
+
+    # Remove all files created from the last packaging and delete Capable.load
+    def cleanup
+      file = @argv[1] || 'Capable.load'
+      if File.exists?(file)
+        contents = File.read(file)
+        LoadParser.new(contents).cleanup!
+      else
+        warn "File '#{file}' does not exist! Uable to load manifest..."
         1
       end
     end
