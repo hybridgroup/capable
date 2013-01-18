@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Hong"]
   s.email       = ["hong@hybridgroup.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Capable: What's this capable of?}
+  s.description = %q{This is primarily used for sharing models/modules (and somewhat limitedly views) across similar subprojects.}
 
   s.rubyforge_project = "capable"
 

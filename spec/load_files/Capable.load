@@ -1,0 +1,4 @@
+---
+- :provider: world
+  :sha256: xxxx
+  :location: tests/lib/world.rb

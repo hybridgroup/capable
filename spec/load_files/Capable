@@ -1,0 +1,11 @@
+# This is used for the tests, it's a little convoluted since I have to generate
+# the source url based on the current path
+# But the astute reader will notice that this file is a fully capable ruby!
+source = "file://#{File.absolute_path Dir.pwd}"
+
+git(source, :refname => :master, :base => "tests/") do
+  capable_of "world" #:target => "tests/w.rb" # default is same directory structure as in the repo put under the base path above
+  capable_of "lib/hello.rb" # for example, this will be put at tests/lib/hello.rb
+  capable_of "Newbie"
+end
+

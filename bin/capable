@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require 'capable/cli' unless defined?(Capable::CLI)
+
+begin
+  cli = Capable::CLI.new
+  exit cli.start
+rescue Interrupt => e
+  warn "\n Caught system Interrupt. Quitting..."
+  warn e.backtrace.join("\n")
+  exit 1
+end
+
