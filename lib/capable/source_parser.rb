@@ -39,7 +39,7 @@ module Capable
 
     # Marks a new git source url and adds it to the source listing
     def git(source_url, opts = {:ref => :master, :base => 'vendor/capable/'}, &block)
-      source_sha = Source::KeyClass.new(source_url).to_s
+      source_sha = Source::KeyClass.new(source_url).to_s.encode('ascii')
       if @sources[source_sha]
         raise SourceExists.new("The source '#{source_url}' has already been defined!")
       else
@@ -183,7 +183,7 @@ module Capable
 
     def manifest
       {:provider => @provider,
-        Source::KeyName => Source::KeyClass.new(get_file!).to_s,
+        Source::KeyName => Source::KeyClass.new(get_file!).to_s.encode('ascii'),
         :target => target,
         :size => get_file!.length}
     end
