@@ -68,6 +68,7 @@ module Capable
     attr_reader :current_cursor
 
     class ProviderExists < Exception; end
+    class ProviderNotFound < Exception; end
     class NoCursor < Exception; end
     
     def initialize
